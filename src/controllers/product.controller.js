@@ -1,0 +1,77 @@
+import * as model from "../models/product.model.js";
+
+// Controlador para manejar las rutas de productos
+export const getAllProducts = async (req, res) => {
+  const { nombre } = req.query;
+  const productos = await model.getAllProducts();
+// Si se proporciona un nombre, filtra los productos
+ if (nombre){
+    const productsFiltered = productos.filter((item) =>
+        // Verifica si el nombre del producto incluye el nombre buscado
+        item.categories.includes(nombre)
+    );
+
+    res.json(productsFiltered);
+    return;
+  }
+    // Si no se proporciona un nombre, devuelve todos los productos
+    res.json(productos);
+};
+
+// Controlador para buscar productos por nombre
+export const searchProducts = async(req, res) => {
+    // Obtiene el nombre del query string
+    const { nombre } = req.query;
+    console.log('Buscando nombre:', nombre);
+    // Si no se proporciona un nombre, devuelve un error
+    if(!nombre){
+        return res.status(400).json({ error: 'El nombre es requerido' });
+    }
+    // Obtiene todos los productos
+    const productos = await model.getAllProducts();
+    // Filtra los productos que coinciden con el nombre proporcionado
+    const Productsfiltered = productos.filter((item) => 
+        // Verifica si el nombre del producto incluye el nombre buscado
+        item.nombre.toLowerCase().includes(nombre.toLowerCase())
+    );
+    // Si no se encuentran productos, devuelve un error 404
+    if (Productsfiltered.length == 0) {
+        return res.status(404).json({ error: 'No se encuentra el Producto' });
+    } 
+    // Devuelve los productos filtrados
+    res.json(Productsfiltered);
+};
+
+// Controlador para obtener un producto por ID
+export const getProductById = async(req, res) => {
+    const id = req.params.id;
+    
+    const productos = await model.getProductById(id);
+    
+    if (productos) {
+        res.json(productos);
+    } else {
+        res.status(404).json({ error: 'Producto no encontrado' }); // ahora tambien si es null me devuelve este error al buscar por ID
+    }
+};
+
+// Controlador para crear un nuevo producto
+export const createProduct = async (req, res) => {
+  try {
+    // Modelo de datos del producto
+    const { 
+        nombre, 
+        precio, 
+        disponible } = req.body;
+        // Verifica que los campos obligatorios estén presentes
+    if (!nombre || precio == null || disponible == null) {
+        return res.status(400).json({ error: "Faltan datos obligatorios" });
+    }
+    // Crea el producto utilizando el modelo
+    const id = await model.createProduct({ nombre, precio, disponible });
+    res.status(201).json({ mensaje: "Producto creado", id });
+  } catch (error) {
+    console.error("Error al crear producto:", error);
+    res.status(500).json({ error: "Error del servidor" });
+  }
+};

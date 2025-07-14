@@ -1,12 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import productos from './models/product.model.js'; 
-import producsRouters from './routes/product.routes.js';
-
+import producsRouters from './src/routes/product.routes.js';
+import 'dotenv/config';
 
 const app = express ();
-const PORT = 3000;
+const PORT = process.env.PORT || 3002;
 
 // middleware global
 app.use(cors({
@@ -21,12 +20,12 @@ app.use(cors({
 
 // Middleware body-parser para leer JSON
 app.use(bodyParser.json());
-
+app.use(express.json());
 // Middleware routers
 app.use('/api/', producsRouters);
 
 // Iniciar el servidor
 app.listen(PORT, () => {
-    console.log(`servidor arriba: http://localhost:${PORT}`);
+    console.log(`servidor arriba: http://localhost:${PORT}/api`);
     // Inicializar con "npm run dev" 
 });

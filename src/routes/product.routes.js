@@ -19,8 +19,8 @@ un error de autenticación en caso contrario.
 import express from 'express';
 import { db } from '../config/db.js';   
 import { Router } from 'express';
-import products from '../models/product.model.js'; 
-import { getAllProducts, searchProducts, getProductById } from '../controllers/product.controller.js';
+//import products from '../models/product.model.js'; 
+import { getAllProducts, searchProducts, getProductById, createProduct } from '../controllers/product.controller.js';
 
 const router = Router();
 
@@ -30,12 +30,15 @@ router.get("/", (req, res) => {
 });
 
 // Peticion busqueda por nombre - http://localhost:3000/api/products/search?nombre=algo -
-router.get("/products/search", searchProducts);
+router.get("/productos/search", searchProducts);
 
 // Peticiones Get
-router.get("/products", getAllProducts); // Aquí deberías devolver la lista de productos
+router.get("/productos", getAllProducts); // Aquí deberías devolver la lista de productos
 
 // Peticiones Get por ID
-router.get("/products/:id", getProductById);
+router.get("/productos/:id", getProductById); // Aquí deberías devolver el producto por ID
+
+// peticiones Post
+router.post("/productos/create", createProduct); // Aquí deberías crear un nuevo producto
 
 export default router;
