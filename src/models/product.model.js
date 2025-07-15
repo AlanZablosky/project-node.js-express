@@ -77,3 +77,15 @@ export const createProduct = async (newProduct) => {
     console.error("Error al agregar el producto:", error);
   }
 };
+
+export const deleteProduct = async (id) => {
+  try { 
+// Obtiene la referencia del documento por ID
+    const productRef = doc(productosCollection, id); // Verifica si el producto existe 
+// Elimina el documento de la colección
+    await deleteDoc(productRef);
+    console.log(`Producto con ID ${id} eliminado`);
+  } catch (error) {
+    console.error(`Error al eliminar el producto con ID ${id}:`, error);
+  }
+  };

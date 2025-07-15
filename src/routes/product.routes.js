@@ -20,7 +20,7 @@ import express from 'express';
 import { db } from '../config/db.js';   
 import { Router } from 'express';
 //import products from '../models/product.model.js'; 
-import { getAllProducts, searchProducts, getProductById, createProduct } from '../controllers/product.controller.js';
+import { getAllProducts, searchProducts, getProductById, createProduct, deleteProduct } from '../controllers/product.controller.js';
 
 const router = Router();
 
@@ -40,5 +40,8 @@ router.get("/productos/:id", getProductById); // Aquí deberías devolver el pro
 
 // peticiones Post
 router.post("/productos/create", createProduct); // Aquí deberías crear un nuevo producto
+
+// Peticiones Delete
+router.delete("/productos/delete/:id", deleteProduct); // Aquí deberías eliminar el producto por ID
 
 export default router;

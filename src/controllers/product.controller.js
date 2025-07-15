@@ -57,21 +57,29 @@ export const getProductById = async(req, res) => {
 
 // Controlador para crear un nuevo producto
 export const createProduct = async (req, res) => {
-  try {
     // Modelo de datos del producto
-    const { 
-        nombre, 
-        precio, 
-        disponible } = req.body;
-        // Verifica que los campos obligatorios estén presentes
+    const { nombre, precio, disponible } = req.body;
+    console.log('Creando producto:', nombre,'-','$', precio,'-','disponible:', disponible);
+
+    // Verifica que los campos obligatorios estén presentes
     if (!nombre || precio == null || disponible == null) {
         return res.status(400).json({ error: "Faltan datos obligatorios" });
-    }
+    } else {
     // Crea el producto utilizando el modelo
-    const id = await model.createProduct({ nombre, precio, disponible });
-    res.status(201).json({ mensaje: "Producto creado", id });
-  } catch (error) {
-    console.error("Error al crear producto:", error);
-    res.status(500).json({ error: "Error del servidor" });
-  }
-};
+        const id = await model.createProduct({ nombre, precio, disponible });
+        res.status(201).json({ mensaje: "Producto creado", id });
+}};
+
+// Controlador para eliminar un producto por ID
+export const deleteProduct = async (req, res) => {  
+    // Obtiene el ID del producto desde los parámetros de la solicitud
+    const id = req.params.id;   
+    const producto = await model.getProductById(id);
+    // Verifica si el producto no existe
+    if (!producto) { 
+        return res.status(404).json({ error: 'Producto no encontrado o no existe' });
+    }  else { // Si el producto existe, lo elimina
+        await model.deleteProduct(id);
+        res.json({ mensaje: 'Producto eliminado con exito' });
+    }
+}
