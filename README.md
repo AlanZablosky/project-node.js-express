@@ -1,8 +1,10 @@
 # 🛒 Backend / API de Productos con Node.js y Express
 
 Este proyecto es una **API REST** construida con **Node.js**, **Express** y **Body-Parser**, que permite gestionar una lista de productos. 
-La API incluye rutas para obtener todos los productos, buscar por nombre, y obtener un producto por su ID.
-Por ahora es ese el proyecto, se ira mejorando conforme el tiempo.
+
+La **API** incluye rutas para obtener todos los productos, buscar por nombre, obtener un producto por su ID, Crea producto nuevo y Elimina por Id. Por ahora este es el Proyecyo y se ira actualizand0...
+
+
 ## 🚀 Tecnologías utilizadas
 
 - Node.js
@@ -25,7 +27,7 @@ GET "api/products/:id"
 GET "api/products/search?nombre= "
     Filtra productos por nombre (parcial o completo).
     Ejemplo: /products/search?nombre=mouse
-    
+
 POST "api/productos/create" 
     Usando postman en "body" agregar nombre, precio y disponibilidad. 
     Ejemplo: { "nombre": "cacao", "precio": 1500, "disponible": true }
