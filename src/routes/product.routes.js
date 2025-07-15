@@ -20,7 +20,7 @@ import express from 'express';
 import { db } from '../config/db.js';   
 import { Router } from 'express';
 //import products from '../models/product.model.js'; 
-import { getAllProducts, searchProducts, getProductById, createProduct, deleteProduct } from '../controllers/product.controller.js';
+import { getAllProducts, searchProducts, getProductById, createProduct, deleteProduct, updateProduct } from '../controllers/product.controller.js';
 
 const router = Router();
 
@@ -43,5 +43,8 @@ router.post("/productos/create", createProduct); // Aquí deberías crear un nue
 
 // Peticiones Delete
 router.delete("/productos/delete/:id", deleteProduct); // Aquí deberías eliminar el producto por ID
+
+//Peticin actualizada de productos
+router.patch("/productos/editar/:id", updateProduct); // Aquí deberías actualizar el producto por ID
 
 export default router;

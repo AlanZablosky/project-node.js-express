@@ -82,4 +82,25 @@ export const deleteProduct = async (req, res) => {
         await model.deleteProduct(id);
         res.json({ mensaje: 'Producto eliminado con exito' });
     }
+};
+
+// Controlador para actualizar un producto por ID
+export const updateProduct = async (req, res) => {
+    const id = req.params.id;
+    const { nombre, precio, disponible } = req.body;
+
+    // Verifica que los campos obligatorios estén presentes
+    if (!nombre || precio == null || disponible == null) {
+        return res.status(400).json({ error: "Faltan datos obligatorios" });
+    }
+
+    // Verifica si el producto existe
+    const producto = await model.getProductById(id);
+    if (!producto) {
+        return res.status(404).json({ error: 'Producto no encontrado' });
+    }
+
+    // Actualiza el producto utilizando el modelo
+    await model.updateProduct(id, { nombre, precio, disponible });
+    res.json({ mensaje: `Producto actualizado con éxito tiene el Id:${id} - nombre: ${nombre} - Precio: $${precio} - Disponible: ${disponible}` });
 }

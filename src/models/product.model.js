@@ -89,3 +89,16 @@ export const deleteProduct = async (id) => {
     console.error(`Error al eliminar el producto con ID ${id}:`, error);
   }
   };
+
+export const updateProduct = async (id, updatedProduct) => {
+  try {
+// Obtiene la referencia del documento por ID
+    const productRef = doc(productosCollection, id);
+// Actualiza el documento con los nuevos datos
+    await updateDoc(productRef, updatedProduct);  
+    console.log(`Producto con ID ${id} actualizado`);
+    
+  } catch (error) {
+    console.error(`Error al actualizar el producto con ID ${id}:`, error);
+  }
+  }
