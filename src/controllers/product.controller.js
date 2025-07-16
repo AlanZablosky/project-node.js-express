@@ -44,11 +44,11 @@ export const searchProducts = async(req, res) => {
 
 // Controlador para obtener un producto por ID
 export const getProductById = async(req, res) => {
+    // Obtiene el ID del producto desde los parámetros de la solicitud
     const id = req.params.id;
-    
+    // Verifica que el ID sea válido
     const productos = await model.getProductById(id);
-    
-    if (productos) {
+    if (productos) { // Verifica si el producto existe
         res.json(productos);
     } else {
         res.status(404).json({ error: 'Producto no encontrado' }); // ahora tambien si es null me devuelve este error al buscar por ID
