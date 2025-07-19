@@ -5,8 +5,8 @@ import { collection, getDocs, doc, getDoc,
 
 // Trae la colección de productos en Firestore
 const productosCollection = collection(db, "Productos");
-// Exporta las funciones para interactuar con la colección de productos
 
+// Funciones para interactuar con la colección de productos
 export const getAllProducts = async() => {
   try {
 // Obtiene todos los documentos de la colección
@@ -19,6 +19,7 @@ export const getAllProducts = async() => {
   }
 };
 
+// Función para obtener un producto por ID
 export const getProductById = async (id) => {
   try {
 // Obtiene la referencia del documento por ID
@@ -32,18 +33,20 @@ export const getProductById = async (id) => {
   }
 };
 
+// Función para crear un nuevo producto
 export const createProduct = async (newProduct) => {
   try {
 // Agrega un nuevo documento a la colección de productos
     const docRef = await addDoc(productosCollection, newProduct);
     console.log("Producto creado con ID:", docRef.id); // Muestra en consola el producto agregado
-    return docRef.id;
+    return {id:docRef.id, ...newProduct}; // Devuelve el producto creado con su ID
   } catch (error) {
 // Si ocurre un error lo muestra en la consola
     console.error("Error al agregar el producto:", error);
   }
 };
 
+// Función para eliminar un producto por ID
 export const deleteProduct = async (id) => {
   try { 
 // Obtiene la referencia del documento por ID
@@ -54,8 +57,9 @@ export const deleteProduct = async (id) => {
   } catch (error) {
     console.error(`Error al eliminar el producto con ID ${id}:`, error);
   }
-  };
+};
 
+// Función para actualizar un producto por ID
 export const updateProduct = async (id, updatedProduct) => {
   try {
 // Obtiene la referencia del documento por ID
@@ -67,4 +71,4 @@ export const updateProduct = async (id, updatedProduct) => {
   } catch (error) {
     console.error(`Error al actualizar el producto con ID ${id}:`, error);
   }
-  }
+};

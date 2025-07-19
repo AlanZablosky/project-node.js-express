@@ -1,13 +1,15 @@
 import express from 'express';
 import cors from 'cors';
-import bodyParser from 'body-parser';
 import producsRouters from './src/routes/product.routes.js';
 import 'dotenv/config';
+import { envs } from './src/config/envs.js';
+import authRouters from './src/routes/auth.route.js';
+
 
 const app = express ();
-const PORT = process.env.PORT || 3002;
+const PORT = envs.port || 3002;
 
-// middleware global
+
 app.use(cors({
     origin: `http://localhost:${PORT}`,
     // Métodos permitidos
@@ -18,11 +20,13 @@ app.use(cors({
     credentials: true
 }));
 
-// Middleware body-parser para leer JSON
-app.use(bodyParser.json());
+// Middleware 
 app.use(express.json());
-// Middleware routers
+
+// routes
 app.use('/api/', producsRouters);
+
+app.use('/auth',authRouters);
 
 // Iniciar el servidor
 app.listen(PORT, () => {

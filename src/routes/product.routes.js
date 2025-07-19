@@ -1,14 +1,11 @@
-/*
-auth.routes.js:
-
-POST /auth/login recibe las credenciales de usuario en el cuerpo 
-(body) de la petición y devuelve el Bearer token si son válidas o 
-un error de autenticación en caso contrario.
-*/
 import express from 'express';
 import { db } from '../config/db.js';   
 import { Router } from 'express';
-import { getAllProducts, searchProducts, getProductById, createProduct, deleteProduct, updateProduct } from '../controllers/product.controller.js';
+import { getAllProducts, searchProducts, getProductById, 
+    createProduct, deleteProduct, updateProduct } from '../controllers/product.controller.js';
+import { authentication } from '../middlewares/auth.middleware.js';
+
+
 
 const router = Router();
 
@@ -27,18 +24,12 @@ router.get("/productos", getAllProducts); // Aquí deberías devolver la lista d
 router.get("/productos/:id", getProductById); // Aquí deberías devolver el producto por ID
 
 // peticiones Post
-router.post("/productos/create", createProduct); // Aquí deberías crear un nuevo producto
+router.post("/productos/create", authentication, createProduct); // Aquí deberías crear un nuevo producto, requiere autenticación
 
 // Peticiones Delete
-router.delete("/productos/delete/:id", deleteProduct); // Aquí deberías eliminar el producto por ID
+router.delete("/productos/delete/:id", authentication, deleteProduct); // Aquí deberías eliminar el producto por ID
 
 //Peticin actualizada de productos
-router.patch("/productos/editar/:id", updateProduct); // Aquí deberías actualizar el producto por ID
-
-// auth.routes.js:
-
-
-// Post /auth/login recibe las credenciales de usuario en el cuerpo
-
+router.patch("/productos/editar/:id", authentication, updateProduct); // Aquí deberías actualizar el producto por ID
 
 export default router;

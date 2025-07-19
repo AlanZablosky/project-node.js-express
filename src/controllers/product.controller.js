@@ -103,4 +103,5 @@ export const updateProduct = async (req, res) => {
     // Actualiza el producto utilizando el modelo
     await model.updateProduct(id, { nombre, precio, disponible });
     res.json({ mensaje: `Producto actualizado con éxito tiene el Id:${id} - nombre: ${nombre} - Precio: $${precio} - Disponible: ${disponible}` });
-}
+};
+
