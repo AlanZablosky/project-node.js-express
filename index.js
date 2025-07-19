@@ -13,7 +13,7 @@ const PORT = envs.port || 3002;
 app.use(cors({
     origin: `http://localhost:${PORT}`,
     // Métodos permitidos
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'], 
     // Headers permitidos
     allowedHeaders: ['Content-Type', 'Authorization'],
     // Permite cookies o credenciales
